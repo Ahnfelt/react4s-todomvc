@@ -58,19 +58,17 @@ case class TodoListComponent() extends Component[NoEmit] {
                         modifyItems(get, _.map(_.copy(completed = check)))
                     }).when(get(items).nonEmpty),
                     E.label(A.`for`("toggle-all"), Text("Mark all as complete")).when(get(items).nonEmpty),
-                    E.ul(A.className("todo-list"),
-                        Tags(
-                            for {
-                                (item, i) <- get(items).zipWithIndex
-                                if get(filterCompleted).forall(_ == item.completed)
-                            } yield {
-                                Component(TodoItemComponent, item).withHandler {
-                                    case Some(editedItem) => modifyItems(get, _.updated(i, editedItem))
-                                    case None => modifyItems(get, list => list.take(i) ++ list.drop(i + 1))
-                                }.withKey("item-" + item.id)
-                            }
-                        )
-                    ).when(get(items).nonEmpty)
+                    E.ul(A.className("todo-list"), Tags(
+                        for {
+                            (item, i) <- get(items).zipWithIndex
+                            if get(filterCompleted).forall(_ == item.completed)
+                        } yield {
+                            Component(TodoItemComponent, item).withHandler {
+                                case Some(editedItem) => modifyItems(get, _.updated(i, editedItem))
+                                case None => modifyItems(get, list => list.take(i) ++ list.drop(i + 1))
+                            }.withKey("item-" + item.id)
+                        }
+                    )).when(get(items).nonEmpty)
                 ),
                 E.footer(A.className("footer"),
                     {
@@ -127,11 +125,14 @@ case class TodoItemComponent(item : P[TodoItem]) extends Component[Option[TodoIt
                 E.button(A.className("destroy"), A.onLeftClick(_ => emit(None))),
                 A.on("DoubleClick", _ => editing.set(true))
             ),
-            E.input(A.className("edit"),
-                A.value(get(item).title),
-                A.onChangeText(text => emit(Some(get(item).copy(title = text)))),
-                A.autoFocus(),
-                A.onBlur(_ => editing.set(false))
+            E.form(
+                E.input(A.className("edit"),
+                    A.value(get(item).title),
+                    A.onChangeText(text => emit(Some(get(item).copy(title = text)))),
+                    A.autoFocus(),
+                    A.onBlur(_ => editing.set(false))
+                ),
+                A.onSubmit { e => e.preventDefault(); editing.set(false) }
             ).when(get(editing))
         )
     }
