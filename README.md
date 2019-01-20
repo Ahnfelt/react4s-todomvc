@@ -1,6 +1,6 @@
 # TodoMVC in 139 lines of Scala with React4s
 
-### [Live demo](http://react4s.org/todomvc/)
+### [Source code](https://github.com/Ahnfelt/react4s-todomvc/blob/master/src/main/scala/com/github/ahnfelt/react4s/todomvc/TodoApp.scala) • [Live demo](http://react4s.org/todomvc/) 
 
 Includes persistence and simple routing. 
 
