@@ -4,7 +4,7 @@
 
 Includes persistence and simple routing. 
 
-Surprisingly, the smallest TodoMVC in the officital collection seems to be another Scala library! ([Binding.scala](http://todomvc.com/examples/binding-scala/#/) - 154 lines, essentially the same length)
+Surprisingly, the smallest TodoMVC in the officital collection seems to be another Scala library! ([Binding.scala](http://todomvc.com/examples/binding-scala/#/) - 154 lines)
 
 
 # Learn more about React4s
